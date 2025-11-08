@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+backend/.env
+backend/.venv/
+venv/
+
+# Django
+staticfiles/
+db.sqlite3
+
+# Node
+node_modules/
+frontend/.env
+frontend/dist/
+frontend/.vite/
+
+# Checkpoints
+backend/rl_engine/checkpoints/*.json
