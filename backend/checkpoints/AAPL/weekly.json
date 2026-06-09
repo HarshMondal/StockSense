@@ -1,0 +1,11 @@
+{
+  "ticker": "AAPL",
+  "horizon": "weekly",
+  "weights": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "bias": 0.0,
+  "learning_rate": 0.05
+}

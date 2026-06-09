@@ -1,0 +1,17 @@
+# Pinned to the versions verified in development.
+Django==5.2.8
+channels==4.3.1
+channels-redis==4.3.0
+django-cors-headers==4.9.0
+django-environ==0.11.2
+httpx==0.28.1
+numpy==2.3.4
+uvicorn[standard]==0.38.0
+websockets==15.0.1
+# Pin to redis-py 5.x: 6.0+/8.0 changed blocking-pop to raise TimeoutError,
+# which channels-redis 4.3.0 does not catch (causes WS read timeouts).
+redis==5.2.1
+
+# Dev / CI
+pytest==9.0.3
+pytest-django==4.12.0

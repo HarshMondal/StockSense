@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+.pytest_cache/
+
+# Django
+backend/db.sqlite3
+backend/staticfiles/
+
+# Secrets / local env
+.env
+backend/.env
+frontend/.env.local
+
+# Node / Vite
+node_modules/
+frontend/dist/
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/

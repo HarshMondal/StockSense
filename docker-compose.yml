@@ -1,0 +1,40 @@
+services:
+  redis:
+    image: redis:7-alpine
+    # Not published to the host — the backend reaches it over the compose network.
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    # Optionally pulls FINNHUB_API_KEY (and other vars) from backend/.env if it
+    # exists. Without a key, search falls back to a built-in catalog and market
+    # data uses the replay simulator, so the app is fully demoable keyless.
+    env_file:
+      - path: ./backend/.env
+        required: false
+    environment:
+      DJANGO_SETTINGS_MODULE: stocksense_backend.settings.dev
+      DJANGO_DEBUG: "True"
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:-dev-insecure-key}
+      DJANGO_ALLOWED_HOSTS: localhost,127.0.0.1,backend
+      DJANGO_CORS_ALLOWED_ORIGINS: http://localhost:5173,http://127.0.0.1:5173
+      REDIS_URL: redis://redis:6379
+      # Force the random-walk simulator so the demo works even when the US market
+      # is closed. Set to 0 (or remove) to use the live Finnhub feed in-hours.
+      STOCKSENSE_FORCE_REPLAY: ${STOCKSENSE_FORCE_REPLAY:-1}
+    depends_on:
+      redis:
+        condition: service_healthy
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
